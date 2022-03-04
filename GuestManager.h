@@ -20,34 +20,50 @@ class Guest{
     RoomType getRoomType() const;
     int getBookedDays();
 
-    virtual int GetRoomBusyDays() = 0;
+    virtual int GetRoomBusyDays() const = 0;
     virtual int GetAdditionalIncome() const = 0;
     Guest (GuestType, RoomType, int StayDuration); // decleration of constructor
     virtual ~Guest(); // Deconstructor does nothing here but is inherited?
     
 
-}
+};
 // Sub classes 
 class Family : public Guest{
     
-}
+};
 class Rockstar : public Guest{
+    public:
+    int GetRoomBusyDays() const;
     
-}
+};
 class Businessman : public Guest{
     private:
     int income;
+
+    public:
+    Businessman(GuestType gtype, RoomType rtype, int stayDuration,int additionalIncome);
+    int GetAdditionalIncome() const;
+
+
    
-}
+};
 
 class GuestManager{
+    private:
     std::vector<Guest*> guestList;
-    GuestManager (int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort);
-    bool AddGuest (GuestType, RoomType, int stayDays, int additionalIncome);
-    bool IsAvailable(RoomType, int inDays);
+    int numStdRoom;//number of standard rooms
+    int priceStdRoom;//price of standard rooms
+    int numCmfRoom;//number of comfy rooms
+    int priceCmfRoom;//price of comfy rooms
+
+    public:
+    GuestManager (int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort){};
+    bool AddGuest (GuestType gtype, RoomType rtype, int stayDays, int additionalIncome = 0);
+    bool IsAvailable(RoomType rtype, int inDays = 0);
     int IncomingProfit();
     float EarningEfficiency();
-    bool operator < (const GuestManager a); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
+    float MaxIncome();
+    bool operator < (const GuestManager b); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
     
 
-}
+};
