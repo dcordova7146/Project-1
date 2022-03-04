@@ -1,8 +1,10 @@
 #include <iostream>
+#include <vector>
 // .h is only decleration
 enum class RoomType{
     Standard, Comfort
 };
+
 enum class GuestType{
     Family, Businessman, Rockstar
 };
@@ -14,13 +16,13 @@ class Guest{
     int bookedDays;
 
     public:
-    GuestType getGuestType();
-    RoomType getRoomType();
+    GuestType getGuestType() const;
+    RoomType getRoomType() const;
     int getBookedDays();
 
-    virtual int GetRoomBusyDays();
-    virtual int GetAdditionalIncome();
-    Guest(GuestType, RoomType, int StayDuration); // decleration of constructor
+    virtual int GetRoomBusyDays() = 0;
+    virtual int GetAdditionalIncome() const = 0;
+    Guest (GuestType, RoomType, int StayDuration); // decleration of constructor
     virtual ~Guest(); // Deconstructor does nothing here but is inherited?
     
 
@@ -33,17 +35,19 @@ class Rockstar : public Guest{
     
 }
 class Businessman : public Guest{
-
+    private:
+    int income;
+   
 }
 
 class GuestManager{
-    //vector of pointers to guest class??
+    std::vector<Guest*> guestList;
     GuestManager (int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort);
-    bool AddGuest(GuestType, RoomType, int stayDays, int additionalIncome = 0);
+    bool AddGuest (GuestType, RoomType, int stayDays, int additionalIncome);
     bool IsAvailable(RoomType, int inDays);
     int IncomingProfit();
     float EarningEfficiency();
     bool operator < (const GuestManager a); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
-
+    
 
 }
