@@ -34,7 +34,7 @@ int Rockstar::GetAdditionalIncome() const{
     return 0;
 }
 int Businessman::GetAdditionalIncome() const{
-    return income * bookedDays;
+    return income;
 }
 int Businessman::GetRoomBusyDays() const{
     return bookedDays;
@@ -43,7 +43,6 @@ int Businessman::GetRoomBusyDays() const{
 
 // Guestmanager class implementations
 GuestManager::GuestManager(int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort){
-    //these should be const?
     numStdRoom = StandardRooms;
     numCmfRoom = ComfortRooms;
     priceStdRoom = dayPriceStandard;
