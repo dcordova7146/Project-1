@@ -72,7 +72,7 @@ class GuestManager{
     bool IsAvailable(RoomType rtype, int inDays = 0);
     int IncomingProfit();
     float EarningEfficiency();
-    int MaxIncome();
+    int CurrentPerDay();
     bool operator < (const GuestManager b); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
     
 

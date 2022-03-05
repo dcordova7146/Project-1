@@ -108,6 +108,8 @@ int GuestManager::IncomingProfit(){
         if(guestList[i]->getRoomType() == RoomType::Standard ){
             if(guestList[i]->getGuestType() == GuestType::Businessman){
                 profit += (guestList[i]->GetAdditionalIncome() * guestList[i]->GetRoomBusyDays())+ (priceStdRoom * guestList[i]->GetRoomBusyDays());
+            }else if (guestList[i]->getGuestType() == GuestType::Rockstar){
+                profit += (priceStdRoom * (guestList[i]->GetRoomBusyDays()-10));
             }else{
                 profit += (priceStdRoom * guestList[i]->GetRoomBusyDays());
             }
@@ -115,21 +117,23 @@ int GuestManager::IncomingProfit(){
         }else if (guestList[i]->getRoomType() == RoomType::Comfort){
              if(guestList[i]->getGuestType() == GuestType::Businessman){
                 profit += (guestList[i]->GetAdditionalIncome() * guestList[i]->GetRoomBusyDays())+ (priceCmfRoom * guestList[i]->GetRoomBusyDays());
+             }else if(guestList[i]->getGuestType() == GuestType::Rockstar){
+                profit += (priceCmfRoom * (guestList[i]->GetRoomBusyDays()-10));
              }else{
-                 profit += (priceCmfRoom * guestList[i]->GetRoomBusyDays());
+                profit += (priceCmfRoom * guestList[i]->GetRoomBusyDays());
              }
         }
 
     }
 
 }
-int GuestManager::MaxIncome(){
+int GuestManager::CurrentPerDay(){
     // my own function to facilite earning efficiency
     // should just be a loop that would iterate thru all rooms and calculating max income
     //max_per_day_income is the sum of base day prices of all existing rooms. 
     //current_per_day_income is the sum of base day prices of all currently occupied rooms plus all additional income generated per day the by current businessmen guests.
 
-    //(numCmfRoom * priceCmfRoom) + (numStdRoom * priceStdRoom) 1 day base max income
+    
     int maxperday = 0;
     for(int i = 0; i < guestList.size();i++){
         if(guestList[i]->getRoomType()==RoomType::Comfort){
@@ -151,7 +155,10 @@ int GuestManager::MaxIncome(){
 }
 float GuestManager::EarningEfficiency(){
     //current_per_day_income/max_per_day_income
-    return float((MaxIncome())/(((numCmfRoom * priceCmfRoom) + (numStdRoom * priceStdRoom))));   
+    // current per day is = current per day function result
+    //(numCmfRoom * priceCmfRoom) + (numStdRoom * priceStdRoom) 1 day base max income
+
+    return float((CurrentPerDay())/(((numCmfRoom * priceCmfRoom) + (numStdRoom * priceStdRoom))));   
 }
 bool GuestManager:: operator <(GuestManager b){
     return (IncomingProfit() < b.IncomingProfit());
