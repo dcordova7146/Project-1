@@ -29,11 +29,18 @@ class Guest{
 };
 // Sub classes 
 class Family : public Guest{
+    public:
+    int GetAdditionalIncome() const;
+    int GetRoomBusyDays() const;
+    Family(GuestType, RoomType, int StayDuration);
     
+
 };
 class Rockstar : public Guest{
     public:
+    int GetAdditionalIncome() const;
     int GetRoomBusyDays() const;
+    Rockstar(GuestType, RoomType, int StayDuration);
     
 };
 class Businessman : public Guest{
@@ -43,6 +50,7 @@ class Businessman : public Guest{
     public:
     Businessman(GuestType gtype, RoomType rtype, int stayDuration,int additionalIncome);
     int GetAdditionalIncome() const;
+    int GetRoomBusyDays() const;
 
 
    
@@ -55,6 +63,8 @@ class GuestManager{
     int priceStdRoom;//price of standard rooms
     int numCmfRoom;//number of comfy rooms
     int priceCmfRoom;//price of comfy rooms
+    int usedStdRoom;
+    int usedCmfRoom;
 
     public:
     GuestManager (int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort){};
@@ -62,7 +72,7 @@ class GuestManager{
     bool IsAvailable(RoomType rtype, int inDays = 0);
     int IncomingProfit();
     float EarningEfficiency();
-    float MaxIncome();
+    int MaxIncome();
     bool operator < (const GuestManager b); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
     
 
