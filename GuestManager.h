@@ -59,28 +59,21 @@ class Businessman : public Guest{
 class GuestManager{
     private:
     std::vector<Guest*> guestList;
-    int numStdRoom;//number of standard rooms
-    int priceStdRoom;//price of standard rooms
-    int numCmfRoom;//number of comfy rooms
-    int priceCmfRoom;//price of comfy rooms
-    int usedStdRoom;
-    int usedCmfRoom;
+    int numStdRoom = 0;//number of standard rooms
+    int priceStdRoom = 0;//price of standard rooms
+    int numCmfRoom = 0;//number of comfy rooms
+    int priceCmfRoom = 0;//price of comfy rooms
+    int usedStdRoom = 0;//number of standard rooms that are currently being used
+    int usedCmfRoom = 0;
 
     public:
-    GuestManager (int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort){
-        numStdRoom = StandardRooms;
-        numCmfRoom = ComfortRooms;
-        priceStdRoom = dayPriceStandard;
-        priceCmfRoom = dayPriceComfort;
-        usedCmfRoom = 0;
-        usedStdRoom = 0;
-    }//;
+    GuestManager(int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort);
     bool AddGuest (GuestType gtype, RoomType rtype, int stayDays, int additionalIncome = 0);
     bool IsAvailable(RoomType rtype, int inDays = 0);
     int IncomingProfit();
     float EarningEfficiency();
-    int CurrentPerDay();
-    bool operator< (const GuestManager b); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
+    //int CurrentPerDay();
+    bool operator< (GuestManager& b); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
     ~GuestManager();
 
 };

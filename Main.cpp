@@ -3,6 +3,7 @@
 
 int main() 
 {
+    
     GuestManager hotel_1{ 5, 10, 2, 20 };
 
     hotel_1.AddGuest(GuestType::Family, RoomType::Standard, 5); 
@@ -35,13 +36,12 @@ int main()
 
     if(hotel_1.IncomingProfit() != 162)  
         std::cout << "TEST 3.1 ERROR: IncomingProfit malfunctions" << std::endl;
-
+    
     GuestManager hotel_2{ 10, 5, 0, 0 };
     hotel_2.AddGuest(GuestType::Family, RoomType::Standard, 2);
     hotel_2.AddGuest(GuestType::Family, RoomType::Standard, 2);
     hotel_2.AddGuest(GuestType::Family, RoomType::Standard, 2);
     hotel_2.AddGuest(GuestType::Businessman, RoomType::Standard, 1, 5);
-
     if (hotel_2.IncomingProfit() != 40)
         std::cout << "TEST 3.2 ERROR: IncomingProfit malfunctions" << std::endl;
 
