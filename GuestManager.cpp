@@ -59,8 +59,13 @@ Guest::Guest(GuestType gtype, RoomType rtype, int stayDuration){}
 Businessman::Businessman(GuestType gtype, RoomType rtype, int stayDuration,int additionalIncome):Guest(gtype, rtype, stayDuration){}
 Rockstar::Rockstar(GuestType gtype, RoomType rtype, int stayDuration):Guest(gtype, rtype, stayDuration){}
 Family::Family(GuestType gtype, RoomType rtype, int stayDuration):Guest(gtype, rtype, stayDuration){}
+GuestManager:: ~GuestManager(){
+    for(long unsigned int i = 0; i <guestList.size();i++){
+        delete guestList[i];
+        guestList[i] = nullptr;
+    }
 
-
+}
 
 //test end
 
@@ -85,8 +90,10 @@ bool GuestManager::AddGuest(GuestType gtype, RoomType rtype, int stayDays, int a
         }
         if(rtype == RoomType::Comfort){usedCmfRoom++;}
         if(rtype == RoomType::Standard){usedStdRoom++;}
+        std::cout << "rockstar added" << std::endl;
         return true;
     }
+     std::cout << "rockstar added" << std::endl;
     return false;
 }
 bool GuestManager::IsAvailable(RoomType rtype, int inDays){
