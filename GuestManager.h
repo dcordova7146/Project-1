@@ -39,7 +39,7 @@ class Family : public Guest{
 class Rockstar : public Guest{
     public:
     int GetAdditionalIncome() const;
-    int GetRoomBusyDays() const;
+    int GetRoomBusyDays() const override;
     Rockstar(GuestType, RoomType, int StayDuration);
     
 };
@@ -67,13 +67,20 @@ class GuestManager{
     int usedCmfRoom;
 
     public:
-    GuestManager (int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort){};
+    GuestManager (int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort){
+        numStdRoom = StandardRooms;
+        numCmfRoom = ComfortRooms;
+        priceStdRoom = dayPriceStandard;
+        priceCmfRoom = dayPriceComfort;
+        usedCmfRoom = 0;
+        usedStdRoom = 0;
+    }//;
     bool AddGuest (GuestType gtype, RoomType rtype, int stayDays, int additionalIncome = 0);
     bool IsAvailable(RoomType rtype, int inDays = 0);
     int IncomingProfit();
     float EarningEfficiency();
     int CurrentPerDay();
-    bool operator < (const GuestManager b); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
-    
+    bool operator< (const GuestManager b); //  GuestManager A is less than GuestManager B if A.IncomingProfit() is less than B.IncomingProfit() this needs to be overridden?
+
 
 };

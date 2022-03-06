@@ -41,7 +41,7 @@ int Businessman::GetRoomBusyDays() const{
 }
 
 
-// Guestmanager class implementations
+/* Guestmanager class implementations
 GuestManager::GuestManager(int StandardRooms, int dayPriceStandard, int ComfortRooms, int dayPriceComfort){
     numStdRoom = StandardRooms;
     numCmfRoom = ComfortRooms;
@@ -51,21 +51,37 @@ GuestManager::GuestManager(int StandardRooms, int dayPriceStandard, int ComfortR
     usedStdRoom = 0;
     
 }
-bool GuestManager::AddGuest(GuestType gtype, RoomType rtype, int stayDays, int additionalIncome = 0){
+*/
+
+//test 
+Guest::~Guest(){}
+Guest::Guest(GuestType gtype, RoomType rtype, int stayDuration){}
+Businessman::Businessman(GuestType gtype, RoomType rtype, int stayDuration,int additionalIncome):Guest(gtype, rtype, stayDuration){}
+Rockstar::Rockstar(GuestType gtype, RoomType rtype, int stayDuration):Guest(gtype, rtype, stayDuration){}
+Family::Family(GuestType gtype, RoomType rtype, int stayDuration):Guest(gtype, rtype, stayDuration){}
+
+
+
+//test end
+
+bool GuestManager::AddGuest(GuestType gtype, RoomType rtype, int stayDays, int additionalIncome){
     //loop that checks if this guestmanager object has a rtype available 
     if (IsAvailable(rtype)) {
         if (gtype == GuestType::Businessman ) {
-            Guest*  ptr = new Businessman(gtype, rtype, stayDays, additionalIncome);
+            Guest* ptr = new Businessman(gtype, rtype, stayDays, additionalIncome);
             guestList.push_back(ptr);
+             std::cout << "busy man added" << std::endl;
             
         }
         if(gtype == GuestType::Family) {
-            Guest*  ptr = new Family(gtype, rtype, stayDays);
+            Guest* ptr = new Family(gtype, rtype, stayDays);
             guestList.push_back(ptr);
+            std::cout << "family added" << std::endl;
         }
         if(gtype == GuestType::Rockstar){
-            Guest*  ptr = new Rockstar(gtype, rtype, stayDays);
+            Guest* ptr = new Rockstar(gtype, rtype, stayDays);
             guestList.push_back(ptr);
+            std::cout << "rockstar added" << std::endl;
         }
         if(rtype == RoomType::Comfort){usedCmfRoom++;}
         if(rtype == RoomType::Standard){usedStdRoom++;}
@@ -73,7 +89,7 @@ bool GuestManager::AddGuest(GuestType gtype, RoomType rtype, int stayDays, int a
     }
     return false;
 }
-bool GuestManager::IsAvailable(RoomType rtype, int inDays = 0){
+bool GuestManager::IsAvailable(RoomType rtype, int inDays){
     //loop that checks if a roomtype is going to be available within indays time
     //decrement amount of rooms here based on what type of room it is
     //memory leaks?
@@ -91,7 +107,7 @@ bool GuestManager::IsAvailable(RoomType rtype, int inDays = 0){
         return true;
      }else{
         //for loop checking days
-        for(int i = 0;i < guestList.size();i++){
+        for(long unsigned int i = 0;i < guestList.size();i++){
             if(guestList[i]->GetRoomBusyDays() <= inDays){
                 return true;
             }
@@ -104,7 +120,7 @@ bool GuestManager::IsAvailable(RoomType rtype, int inDays = 0){
 int GuestManager::IncomingProfit(){
     //for loop iterates thru guestlist vector and adds up profit make sure to account for buisinessman additional income
     int profit = 0;
-    for(int i = 0;i < guestList.size();i++){
+    for(long unsigned int i = 0;i < guestList.size();i++){
         if(guestList[i]->getRoomType() == RoomType::Standard ){
             if(guestList[i]->getGuestType() == GuestType::Businessman){
                 profit += (guestList[i]->GetAdditionalIncome() * guestList[i]->GetRoomBusyDays())+ (priceStdRoom * guestList[i]->GetRoomBusyDays());
@@ -125,6 +141,7 @@ int GuestManager::IncomingProfit(){
         }
 
     }
+    return profit;
 
 }
 int GuestManager::CurrentPerDay(){
@@ -135,7 +152,7 @@ int GuestManager::CurrentPerDay(){
 
     
     int maxperday = 0;
-    for(int i = 0; i < guestList.size();i++){
+    for(long unsigned int i = 0; i < guestList.size();i++){
         if(guestList[i]->getRoomType()==RoomType::Comfort){
             if(guestList[i]->getGuestType()==GuestType::Businessman){
                 maxperday += guestList[i]->GetAdditionalIncome() + priceCmfRoom;
